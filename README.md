@@ -1,275 +1,402 @@
-# C - Binary trees
+Task 0:
+Write a function that creates a binary tree node
 
-This was a group project in which we learnt about the details, advantages,
-and disadvantages of using trees as data structures. We learned about how to
-qualify trees as well as how to traverse them. Throughout the project, we
-implemented binary, binary search, AVL, and Max Binary Heap trees.
+    Prototype: binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
+    Where parent is a pointer to the parent node of the node to create
+    And value is the value to put in the new node
+    When created, a node does not have any child
+    Your function must return a pointer to the new node, or NULL on failure
 
-## Tests :heavy_check_mark:
+1:
+Write a function that inserts a node as the left-child of another node
 
-* [tests](./tests): Folder of test files for all tasks. Provided by ALX.
+    Prototype: binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);
+    Where parent is a pointer to the node to insert the left-child in
+    And value is the value to store in the new node
+    Your function must return a pointer to the created node, or NULL on failure or if parent is NULL
+    If parent already has a left-child, the new node must take its place, and the old left-child must be set as the left-child of the new node.
 
-## Helper File :raised_hands:
+2:
+Write a function that inserts a node as the right-child of another node
 
-* [binary_tree_print.c](./binary_tree_print.c): C function that prints binary
-trees in a pretty way.
+    Prototype: binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value);
+    Where parent is a pointer to the node to insert the right-child in
+    And value is the value to store in the new node
+    Your function must return a pointer to the created node, or NULL on failure or if parent is NULL
+    If parent already has a right-child, the new node must take its place, and the old right-child must be set as the right-child of the new node.
 
-## Header File :file_folder:
+3:
+Write a function that deletes an entire binary tree
 
-* [binary_trees.h](./binary_trees.h): Header file containing definitions and
-prototypes for all types and functions written for the project.
+    Prototype: void binary_tree_delete(binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to delete
+    If tree is NULL, do nothing
 
-Data Structures
-```
-struct binary_tree_s
-{
-    int n;
-    struct binary_tree_s *parent;
-    struct binary_tree_s *left;
-    struct binary_tree_s *right;
-};
+4:
+Write a function that checks if a node is a leaf
 
-typedef struct binary_tree_s binary_tree_t;
-typedef struct binary_tree_s bst_t;
-typedef struct binary_tree_s avl_t;
-typedef struct binary_tree_s heap_t;
-```
+    Prototype: int binary_tree_is_leaf(const binary_tree_t *node);
+    Where node is a pointer to the node to check
+    Your function must return 1 if node is a leaf, otherwise 0
+    If node is NULL, return 0
 
-Function Prototypes
+5:
+Write a function that checks if a given node is a root
 
-| File                             | Prototype                                                                                        |
-| -------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `binary_tree_print.c`            | `void binary_tree_print(const binary_tree_t *tree)`                                              |
-| `0-binary_tree_node.c`           | `binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);`                             |
-| `1-binary_tree_insert_left.c`    | `binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);`                      |
-| `2-binary_tree_insert_right.c`   | `binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value);`                     |
-| `3-binary_tree_delete.c`         | `void binary_tree_delete(binary_tree_t *tree);`                                                  |
-| `4-binary_tree_is_leaf.c`        | `int binary_tree_is_leaf(const binary_tree_t *node);`                                            |
-| `5-binary_tree_is_root.c`        | `int binary_tree_is_root(const binary_tree_t *node);`                                            |
-| `6-binary_tree_preorder.c`       | `void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));`                       |
-| `7-binary_tree_inorder.c`        | `void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));`                        |
-| `8-binary_tree_postorder.c`      | `void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));`                      |
-| `9-binary_tree_height.c`         | `size_t binary_tree_height(const binary_tree_t *tree);`                                          |
-| `10-binary_tree_depth.c`         | `size_t binary_tree_depth(const binary_tree_t *tree);`                                           |
-| `11-binary_tree_size.c`          | `size_t binary_tree_size(const binary_tree_t *tree);`                                            |
-| `12-binary_tree_leaves.c`        | `size_t binary_tree_leaves(const binary_tree_t *tree);`                                          |
-| `13-binary_tree_nodes.c`         | `size_t binary_tree_nodes(const binary_tree_t *tree);`                                           |
-| `14-binary_tree_balance.c`       | `int binary_tree_balance(const binary_tree_t *tree);`                                            |
-| `15-binary_tree_is_full.c`       | `int binary_tree_is_full(const binary_tree_t *tree);`                                            |
-| `16-binary_tree_is_perfect.c`    | `int binary_tree_is_perfect(const binary_tree_t *tree);`                                         |
-| `17-binary_tree_sibling.c`       | `binary_tree_t *binary_tree_sibling(binary_tree_t *node);`                                       |
-| `18-binary_tree_uncle.c`         | `binary_tree_t *binary_tree_uncle(binary_tree_t *node);`                                         |
-| `100-binary_trees_ancestor.c`    | `binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second);` |
-| `101-binary_tree_levelorder.c`   | `void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));`                     |
-| `102-binary_tree_is_complete.c`  | `int binary_tree_is_complete(const binary_tree_t *tree);`                                        |
-| `103-binary_tree_rotate_left.c`  | `binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);`                                   |
-| `104-binary_tree_rotate_right.c` | `binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);`                                  |
-| `110-binary_tree_is_bst.c`       | `int binary_tree_is_bst(const binary_tree_t *tree);`                                             |
-| `111-bst_insert.c`               | `bst_t *bst_insert(bst_t **tree, int value);`                                                    |
-| `112-array_to_bst.c`             | `bst_t *array_to_bst(int *array, size_t size);`                                                  |
-| `113-bst_search.c`               | `bst_t *bst_search(const bst_t *tree, int value);`                                               |
-| `114-bst_remove.c`               | `bst_t *bst_remove(bst_t *root, int value);`                                                     |
-| `120-binary_tree_is_avl.c`       | `int binary_tree_is_avl(const binary_tree_t *tree);`                                             |
-| `121-avl_insert.c`               | `avl_t *avl_insert(avl_t **tree, int value);`                                                    |
-| `122-array_to_avl.c`             | `avl_t *array_to_avl(int *array, size_t size);`                                                  |
+    Prototype: int binary_tree_is_root(const binary_tree_t *node);
+    Where node is a pointer to the node to check
+    Your function must return 1 if node is a root, otherwise 0
+    If node is NULL, return 0
 
-## Tasks :page_with_curl:
+6:
+Write a function that goes through a binary tree using pre-order traversal
 
-* **0. New node**
-  * [0-binary_tree_node.c](./0-binary_tree_node.c): C function that creates a
-  binary tree node with a given parent and value.
-  * Returns a pointer to the new node, or `NULL` on failure.
+    Prototype: void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
+    Where tree is a pointer to the root node of the tree to traverse
+    And func is a pointer to a function to call for each node. The value in the node must be passed as a parameter to this function.
+    If tree or func is NULL, do nothing
 
-* **1. Insert left**
-  * [1-binary_tree_insert](./1-binary_tree_insert): C function that inserts a
-  node as the left-child of another.
-  * Returns a pointer to the new node, or `NULL` on failure.
-  * If the given `parent` already contains a left node, the new node takes its
-  place and the old left-child becomes the left-child of the new node.
+7:
+Write a function that goes through a binary tree using in-order traversal
 
-* **2. Insert right**
-  * [2-binary_tree_insert_right.c](./2-binary_tree_insert_right.c): C function that
-  inserts a node as the right-child of another.
-  * Returns a pointer to the new node, or `NULL` on failure.
-  * If the given `parent` already contains a right node, the new node takes its
-  place and the old right-child becomes the right-child of the new node.
+    Prototype: void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
+    Where tree is a pointer to the root node of the tree to traverse
+    And func is a pointer to a function to call for each node. The value in the node must be passed as a parameter to this function.
+    If tree or func is NULL, do nothing
 
-* **3. Delete**
-  * [3-binary_tree_delete.c](./3-binary_tree_delete.c): C function that deletes
-  an entire binary tree.
+8:
+Write a function that goes through a binary tree using post-order traversal
 
-* **4. Is leaf**
-  * [4-binary_tree_is_leaf.c](./4-binary_tree_is_leaf.c): C function that checks
-  if a given node is a leaf.
-  * Returns `1` if the node is a leaf, `0` otherwise.
+    Prototype: void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));
+    Where tree is a pointer to the root node of the tree to traverse
+    And func is a pointer to a function to call for each node. The value in the node must be passed as a parameter to this function.
+    If tree or func is NULL, do nothing
 
-* **5. Is root**
-  * [5-binary_tree_is_root.c](./5-binary_tree_is_root.c): C function that checks
-  if a given node is a root.
-  * Returns `1` if the node is a root, `0` otherwise.
+9:
+Write a function that measures the height of a binary tree
 
-* **6. Pre-order traversal**
-  * [6-binary_tree_preorder.c](./6-binary_tree_preorder.c): C function that
-  traverses a tree using pre-order traversal.
+    Prototype: size_t binary_tree_height(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to measure the height.
+    If tree is NULL, your function must return 0
 
-* **7. In-order traversal**
-  * [7-binary_tree_inorder.c](./7-binary_tree_inorder.c): C function that
-  traverses a tree using in-order traversal.
+10:
+Write a function that measures the depth of a node in a binary tree
 
-* **8. Post-order traversal**
-  * [8-binary_tree_postorder.c](./8-binary_tree_postorder.c): C function that
-  traverses a tree using post-order traversal.
+    Prototype: size_t binary_tree_depth(const binary_tree_t *tree);
+    Where tree is a pointer to the node to measure the depth
+    If tree is NULL, your function must return 0
+11:
+Write a function that measures the size of a binary tree
 
-* **9. Height**
-  * [9-binary_tree_height.c](./9-binary_tree_height.c): C function that returns
-  the height of a binary tree.
+    Prototype: size_t binary_tree_size(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to measure the size
+    If tree is NULL, the function must return 0
 
-* **10. Depth**
-  * [10-binary_tree_depth.c](./10-binary_tree_depth.c): C function that returns
-  the depth of a given node in a binary tree.
 
-* **11. Size**
-  * [11-binary_tree_size.c](./11-binary_tree_size.c): C function that returns
-  the size of a binary tree.
+12:
+Write a function that counts the leaves in a binary tree
 
-* **12. Leaves**
-  * [12-binary_tree_leaves.c](./12-binary_tree_leaves.c): C function that returns
-  the number of leaves in a binary tree.
+    Prototype: size_t binary_tree_leaves(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to count the number of leaves
+    If tree is NULL, the function must return 0
+    A NULL pointer is not a leaf
 
-* **13. Nodes**
-  * [13-binary_tree_nodes.c](./13-binary_tree_nodes.c): C function that returns
-  the number of nodes in a binary tree with at least one child.
 
-* **14. Balance factor**
-  * [14-binary_tree_balance.c](./14-binary_tree_balance.c): C function that
-  returns the balance factor of a binary tree.
+13:
+Write a function that counts the nodes with at least 1 child in a binary tree
 
-* **15. Is full**
-  * [15-binary_tree_is_full.c](./15-binary_tree_is_full.c): C function that
-  checks if a binary tree is full.
-  * Returns `1` if a tree is full, `0` otherwise.
+    Prototype: size_t binary_tree_nodes(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to count the number of nodes
+    If tree is NULL, the function must return 0
+    A NULL pointer is not a node
 
-* **16. Is perfect**
-  * [16-binary_tree_is_perfect.c](./16-binary_tree_is_perfect.c): C function
-  that checks if a binary tree is perfect.
-  * Returns `1` if a tree is perfect, `0` otherwise.
 
-* **17. Sibling**
-  * [17-binary_tree_sibling.c](./17-binary_tree_sibling.c): C function that
-  returns a pointer to the sibling of a given node in a binary tree.
-  * Returns `NULL` if no sibling is found.
+14:
+Write a function that measures the balance factor of a binary tree
 
-* **18. Uncle**
-  * [18-binary_tree_uncle.c](./18-binary_tree_uncle.c): C function that
-  returns a pointer to the uncle of a given node in a binary tree.
-  * Returns `NULL` if no uncle is found.
+    Prototype: int binary_tree_balance(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to measure the balance factor
+    If tree is NULL, return 0
 
-* **19. Lowest common ancestor**
-  * [100-binary_trees_ancestor.c](./100-binary_trees_ancestor.c): C function
-  that returns a pointer to the lowest common ancestor node of two given nodes
-  in a binary tree.
-  * Returns `NULL` if no common ancestor is found.
+15:
+Write a function that checks if a binary tree is full
 
-* **20. Level-order traversal**
-  * [101-binary_tree_levelorder.c](./101-binary_tree_levelorder.c): C function
-  that traverses a binary tree using level-order traversal.
+    Prototype: int binary_tree_is_full(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    If tree is NULL, your function must return 0
 
-* **21. Is complete**
-  * [102-binary_tree_is_complete.c](./102-binary_tree_is_complete.c): C function
-  that checks if a binary tree is complete.
-  * Returns `1` if the tree is complete, `0` otherwise.
+16:
+Write a function that checks if a binary tree is perfect
 
-* **22. Rotate left**
-  * [103-binary_tree_rotate_left.c](./103-binary_tree_rotate_left.c): C function
-  that performs a left-rotation on a binary tree.
-  * Returns a pointer to the new root node of the tree after rotation.
+    Prototype: int binary_tree_is_perfect(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    If tree is NULL, your function must return 0
 
-* **23. Rotate right**
-  * [104-binary_tree_rotate_right.c](./104-binary_tree_rotate_right.c): C function
-  that performs a right-rotation on a binary tree.
-  * Returns a pointer to the new root node of the tree after rotation.
 
-* **24. Is BST**
-  * [110-binary_tree_is_bst.c](./110-binary_tree_is_bst.c): C function that
-  checks if a binary tree is a valid binary search tree.
-  * Returns `1` if the tree is a valid BST, `0` otherwise.
+17:
+Write a function that finds the sibling of a node
 
-* **25. BST - Insert**
-  * [111-bst_insert.c](./111-bst_insert.c): C function that inserts a value into
-  a binary search tree.
-  * Returns a pointer to the new node, or `NULL` on failure.
-  * If the tree is `NULL`, the value becomes the root node.
-  * The value is ignored if it is already present in the tree.
+    Prototype: binary_tree_t *binary_tree_sibling(binary_tree_t *node);
+    Where node is a pointer to the node to find the sibling
+    Your function must return a pointer to the sibling node
+    If node is NULL or the parent is NULL, return NULL
+    If node has no sibling, return NULL
 
-* **26. BST - Array to BST**
-  * [112-array_to_bst.c](./112-array_to_bst.c): C function that builds a binary
-  search tree from an array.
-  * Returns a pointer to the root node of the created tree, or `NULL` on failure.
+18:
+Write a function that finds the sibling of a node
 
-* **27. BST - Search**
-  * [113-bst_search.c](./113-bst_search.c): C function that searches for a value
-  in a binary search tree.
-  * If the value is matched in the BST, returns a pointer to the matched node.
-  * Otherwise, returns `NULL`.
+    Prototype: binary_tree_t *binary_tree_sibling(binary_tree_t *node);
+    Where node is a pointer to the node to find the sibling
+    Your function must return a pointer to the sibling node
+    If node is NULL or the parent is NULL, return NULL
+    If node has no sibling, return NULL
 
-* **28. BST - Remove**
-  * [114-bst_remove.c](./114-bst_remove.c): C function that removes a node from
-  a binary search tree.
-  * Returns a pointer to the new root node of the tree after deletion.
-  * If the node to be deleted has two children, it is replaced with its first
-  in-order successor.
 
-* **29. Big O #BST**
-  * [115-O](./115-O): Text file containing the average time complexities of
-  binary search tree operations (one answer per line):
-    * Inserting the value `n`.
-    * Removing the node with the value `n`.
-    * Searching for a node in a BST of size `n`.
+19:
+Write a function that finds the lowest common ancestor of two nodes
 
-* **30. Is AVL**
-  * [120-binary_tree_is_avl.c](./120-binary_tree_is_avl.c): C function that checks if
-  a binary tree is a valid AVL tree.
-  * If the tree is a valid AVL tree, returns `1`.
-  * Otherwise, returns `0`.
+    Prototype: binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second);
+    Where first is a pointer to the first node
+    And second is a pointer to the second node
+    Your function must return a pointer to the lowest common ancestor node of the two given nodes
+    If no common ancestor was found, your function must return NULL
 
-* **31. AVL - Insert**
-  * [121-avl_insert.c](./121-avl_insert.c): C function that inserts a value in an AVL tree.
-  * Returns a value to the inserted node, or `NULL` on failure.
+20:
+Write a function that goes through a binary tree using level-order traversal
 
-* **32. AVL - Array to AVL**
-  * [122-array_to_avl.c](./122-array_to_avl.c): C function that builds an AVL tree
-  from an array.
-  * Returns a pointer to the root node of the created AVL tree, or `NULL` on failure.
-  * Ignores duplicate values.
+    Prototype: void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int));
+    Where tree is a pointer to the root node of the tree to traverse
+    And func is a pointer to a function to call for each node. The value in the node must be passed as a parameter to this function.
+    If tree or func is NULL, do nothing
 
-* **35. Big O #AVL Tree**
-  * [125-O](./125-O): Text file containing the average time complexities of AVL tree
-  opeartions (one answer per line):
-    * Inserting the value `n`.
-    * Removing the node with the value `n`.
-    * Searching for a node in an AVL tree of size `n`.
 
-* **41. Big O #Binary Heap**
-  * [135-O](./135-O): Text file containing the average time complexities of
-  binary heap opeartions (one answer per line):
-    * Inserting the value `n`.
-    * Extracting the root node.
-    * Searching for a node in a binary heap of size `n`.
+21:
+Write a function that checks if a binary tree is complete
 
-## Authors
-<details>
-    <summary>Suara Ayomide</summary>
-    <ul>
-    <li><a href="https://www.github.com/aysuarex">Github</a></li>
-    <li><a href="https://www.twitter.com/Aysuarex">Twitter</a></li>
-    <li><a href="mailto:aysuarex@gmail.com">e-mail</a></li>
-    </ul>
-</details>
-<details>
-    <summary>--- Chioma</summary>
-    <ul>
-    <li><a href="https://www.github.com/chioma2000">Github</a></li>
-    <li><a href="https://www.twitter.com/---chioma">Twitter</a></li>
-    <li><a href="mailto:---chioma---@gmail.com">e-mail</a></li>
-    </ul>
-</details>
+    Prototype: int binary_tree_is_complete(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    If tree is NULL, your function must return 0
+
+
+22:
+Write a function that performs a left-rotation on a binary tree
+
+    Prototype: binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to rotate
+    Your function must return a pointer to the new root node of the tree once rotated
+
+
+23:
+Write a function that performs a right-rotation on a binary tree
+
+    Prototype: binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to rotate
+    Your function must return a pointer to the new root node of the tree once rotated
+
+
+24:
+Write a function that checks if a binary tree is a valid Binary Search Tree
+
+    Prototype: int binary_tree_is_bst(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    Your function must return 1 if tree is a valid BST, and 0 otherwise
+    If tree is NULL, return 0
+
+Properties of a Binary Search Tree:
+
+    The left subtree of a node contains only nodes with values less than the node’s value
+    The right subtree of a node contains only nodes with values greater than the node’s value
+    The left and right subtree each must also be a binary search tree
+    There must be no duplicate values
+
+
+25:
+Write a function that inserts a value in a Binary Search Tree
+
+    Prototype: bst_t *bst_insert(bst_t **tree, int value);
+    Where tree is a double pointer to the root node of the BST to insert the value
+    And value is the value to store in the node to be inserted
+    Your function must return a pointer to the created node, or NULL on failure
+    If the address stored in tree is NULL, the created node must become the root node.
+    If the value is already present in the tree, it must be ignored
+
+Your file 0-binary_tree_node.c will be compile during the correction
+
+26:
+Write a function that builds a Binary Search Tree from an array
+
+    Prototype: bst_t *array_to_bst(int *array, size_t size);
+    Where array is a pointer to the first element of the array to be converted
+    And size is the number of element in the array
+    Your function must return a pointer to the root node of the created BST, or NULL on failure
+    If a value of the array is already present in the tree, this value must be ignored
+
+Your files 111-bst_insert.c and 0-binary_tree_node.c will be compiled during the correction
+
+27:
+Write a function that searches for a value in a Binary Search Tree
+
+    Prototype: bst_t *bst_search(const bst_t *tree, int value);
+    Where tree is a pointer to the root node of the BST to search
+    And value is the value to search in the tree
+    Your function must return a pointer to the node containing a value equals to value
+    If tree is NULL or if nothing is found, your function must return NULL
+
+
+28:
+Write a function that removes a node from a Binary Search Tree
+
+    Prototype: bst_t *bst_remove(bst_t *root, int value);
+    Where root is a pointer to the root node of the tree where you will remove a node
+    And value is the value to remove in the tree
+    Once located, the node containing a value equals to value must be removed and freed
+    If the node to be deleted has two children, it must be replaced with its first in-order successor (not predecessor)
+    Your function must return a pointer to the new root node of the tree after removing the desired value
+
+
+29:
+What are the average time complexities of those operations on a Binary Search Tree (one answer per line):
+
+    Inserting the value n
+    Removing the node with the value n
+    Searching for a node in a BST of size n
+
+
+30:
+Write a function that checks if a binary tree is a valid AVL Tree
+
+    Prototype: int binary_tree_is_avl(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    Your function must return 1 if tree is a valid AVL Tree, and 0 otherwise
+    If tree is NULL, return 0
+
+Properties of an AVL Tree:
+
+    An AVL Tree is a BST
+    The difference between heights of left and right subtrees cannot be more than one
+    The left and right subtrees must also be AVL trees
+
+
+31:
+Write a function that inserts a value in an AVL Tree
+
+    Prototype: avl_t *avl_insert(avl_t **tree, int value);
+    Where tree is a double pointer to the root node of the AVL tree for inserting the value
+    And value is the value to store in the node to be inserted
+    Your function must return a pointer to the created node, or NULL on failure
+    If the address stored in tree is NULL, the created node must become the root node.
+    The resulting tree after insertion, must be a balanced AVL Tree
+
+Your files 14-binary_tree_balance.c, 103-binary_tree_rotate_left.c, 104-binary_tree_rotate_right.c and 0-binary_tree_node.c will be compiled during the correction
+
+32:
+Write a function that builds an AVL tree from an array
+
+    Prototype: avl_t *array_to_avl(int *array, size_t size);
+    Where array is a pointer to the first element of the array to be converted
+    And size is the number of element in the array
+    Your function must return a pointer to the root node of the created AVL tree, or NULL on failure
+    If a value of the array is already present in the tree, this value must be ignored
+
+Your files 121-avl_insert.c, 0-binary_tree_node.c, 14-binary_tree_balance.c, 103-binary_tree_rotate_left.c and 104-binary_tree_rotate_right.c will be compiled during the correction
+
+33:
+Write a function that removes a node from an AVL tree
+
+    Prototype: avl_t *avl_remove(avl_t *root, int value);
+    Where root is a pointer to the root node of the tree for removing a node
+    And value is the value to remove in the tree
+    Once located, the node containing a value equals to value must be removed and freed
+    If the node to be deleted has two children, it must be replaced with its first in-order successor (not predecessor)
+    After deletion of the desired node, the tree must be rebalanced if necessary
+    Your function must return a pointer to the new root node of the tree after removing the desired value, and after rebalancing
+
+Your files 14-binary_tree_balance.c, 103-binary_tree_rotate_left.c and 104-binary_tree_rotate_right.c will be compiled during the correction
+34:
+
+Write a function that builds an AVL tree from an array
+
+    Prototype: avl_t *sorted_array_to_avl(int *array, size_t size);
+    Where array is a pointer to the first element of the array to be converted
+    And size is the number of element in the array
+    Your function must return a pointer to the root node of the created AVL tree, or NULL on failure
+    You can assume there will be no duplicate value in the array
+    You are not allowed to rotate
+    You can only have 2 functions in your file
+
+Your file 0-binary_tree_node.c will be compiled during the correction
+
+35:
+What are the average time complexities of those operations on an AVL Tree (one answer per line):
+
+    Inserting the value n
+    Removing the node with the value n
+    Searching for a node in an AVL tree of size n
+
+
+36:
+
+
+3Write a function that checks if a binary tree is a valid Max Binary Heap
+
+    Prototype: int binary_tree_is_heap(const binary_tree_t *tree);
+    Where tree is a pointer to the root node of the tree to check
+    Your function must return 1 if tree is a valid Max Binary Heap, and 0 otherwise
+    If tree is NULL, return 0
+
+Properties of a Max Binary Heap:
+
+    It’s a complete tree
+    In a Max Binary Heap, the value at root must be maximum among all values present in Binary Heap
+    The last property must be recursively true for all nodes in Binary Tree
+37:
+Write a function that inserts a value in Max Binary Heap
+
+    Prototype: heap_t *heap_insert(heap_t **root, int value)
+    Where root is a double pointer to the root node of the Heap to insert the value
+    And value is the value to store in the node to be inserted
+    Your function must return a pointer to the created node, or NULL on failure
+    If the address stored in root is NULL, the created node must become the root node.
+    You have to respect a Max Heap ordering
+    You are allowed to have up to 6 functions in your file
+
+Your file 0-binary_tree_node.c will be compiled during the correction
+
+38:
+Write a function that builds a Max Binary Heap tree from an array
+
+    Prototype: heap_t *array_to_heap(int *array, size_t size);
+    Where array is a pointer to the first element of the array to be converted
+    And size is the number of element in the array
+    Your function must return a pointer to the root node of the created Binary Heap, or NULL on failure
+
+Your files 131-heap_insert.c and 0-binary_tree_node.c will be compiled during the correction
+
+39:
+Write a function that extracts the root node of a Max Binary Heap
+
+    Prototype: int heap_extract(heap_t **root);
+    Where root is a double pointer to the root node of heap
+    Your function must return the value stored in the root node
+    The root node must be freed and replace with the last level-order node of the heap
+    Once replaced, the heap must be rebuilt if necessary
+    If your function fails, return 0
+
+
+40:
+Write a function that converts a Binary Max Heap to a sorted array of integers
+
+    Prototype: int *heap_to_sorted_array(heap_t *heap, size_t *size);
+    Where heap is a pointer to the root node of the heap to convert
+    And size is an address to store the size of the array
+    You can assume size is a valid address
+    Since we are using Max Heap, the returned array must be sorted in descending order
+
+Your file 133-heap_extract.c will be compile during the correction
+
+41:
+What are the average time complexities of those operations on a Binary Heap (one answer per line):
+
+    Inserting the value n
+    Extracting the root node
+    Searching for a node in a binary heap of size n
